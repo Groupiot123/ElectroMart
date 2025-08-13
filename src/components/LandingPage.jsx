@@ -2,6 +2,8 @@ import React from 'react';
 import Navbar from './common/Navbar';
 import bgofweb from '../assets/bgOfweb.png'; 
 import Footer from './common/Footer';
+import Login from './Login';
+import Signup from './SignUp';
 
 
 const LandingPage = () => {
@@ -21,6 +23,8 @@ const LandingPage = () => {
 
       
 <Footer />
+<Login />
+<Signup />
     </div>
   );
 };
