@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+   const navigate = useNavigate();
   const [form, setForm] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
 
@@ -28,9 +31,12 @@ const Login = () => {
     }
   };
 
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md relative">
+       
+
         <h2 className="text-2xl font-bold mb-6 text-center text-[#11383c]">Login to ElectroMart</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
