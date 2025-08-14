@@ -2,3 +2,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+font-family: Poppins, sans-serif;
+}
+
+.font-Poppins {
+font-family: 'Poppins', sans-serif;
+}
