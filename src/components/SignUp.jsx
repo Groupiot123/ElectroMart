@@ -1,9 +1,12 @@
-
 import React, { useState } from 'react';
-  import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../redux/signup'; // Adjust path if needed
 
 const Signup = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -12,6 +15,7 @@ const Signup = () => {
     password: '',
     mobileno: '',
   });
+
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -38,23 +42,47 @@ const Signup = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
+
     if (Object.keys(validationErrors).length === 0) {
-      setSubmitted(true);
+      const payload = {
+        firstName: form.firstName,
+        lastName: form.lastName,
+        address: form.address,
+        username: form.username,
+        password: form.password,
+        mobileNo: form.mobileno,
+        role: 'END_USER',
+      };
+
+      try {
+        await dispatch(registerUser(payload)).unwrap();
+        setSubmitted(true);
+        setForm({
+          firstName: '',
+          lastName: '',
+          address: '',
+          username: '',
+          password: '',
+          mobileno: '',
+        });
+        setErrors({});
+        // Optional: navigate('/login');
+      } catch (error) {
+        setSubmitted(false);
+        setErrors({ api: error });
+      }
     } else {
       setSubmitted(false);
     }
   };
 
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md relative">
-        
-
         <h2 className="text-2xl font-bold mb-6 text-center text-[#11383c]">Create Your Account</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -137,10 +165,12 @@ const Signup = () => {
             Sign Up
           </button>
         </form>
+        {errors.api && (
+          <p className="text-red-500 text-sm mt-2 text-center">{errors.api}</p>
+        )}
         {submitted && (
           <div className="mt-4 p-4 bg-green-100 rounded">
             <p className="text-green-700 font-semibold">Signup Successful!</p>
-
           </div>
         )}
         <p className="mt-4 text-center text-sm">
