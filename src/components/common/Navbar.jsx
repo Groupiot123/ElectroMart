@@ -12,6 +12,7 @@ const Navbar = () => {
           <a href="#home" className="text-lg">Home</a>
           <a href="#services" className="text-lg">Services</a>
           <a href="#about" className="text-lg">About</a>
+          <button onClick={() => navigate('/admin')} className="text-lg">Admin Panel</button>
         </div>
         <div className="flex space-x-6">
           <button onClick={() => navigate('/login')} className="text-lg">Login</button>
